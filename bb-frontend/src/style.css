@@ -51,8 +51,7 @@ body::before{
   background: var(--bg2);
   position: relative;
 }
-
-.box hi{ border-color: var(--border-hi);}
+.box-hi { border-color: var(--border-hi);}
 
 .box-title{
   position: absolute;
@@ -74,14 +73,18 @@ body::before{
 
 /* ── top bar ── */
 
-#topbar {
+.topbar {
   display: flex;
+  flex-wrap: nowrap;
   align-items: center;
-  gap:0;
+  margin-top: 0px;
   margin-bottom: 16px;
   border: 1px solid var(--border);
   background: var(--bg2);
-  flex-shrink: 0;
+  white-space: nowrap;
+  overflow-x: auto; 
+  overflow-y:hidden;
+  scrollbar-width: none;
 }
 
 .tb-logo {
@@ -100,9 +103,15 @@ body::before{
   border-right: 1px solid var(--border);
   padding: 0 10px;
   height: 44px;
-  gap: 6px;
+  gap: 4px;
   position: relative;
   /*flex-wrap: wrap;*/
+  min-width: fit-content;
+  flex: 0 0 auto;
+}
+
+.tb-field:last-child{
+  border-right: none;
 }
 
 .tb-field .info-tooltip{
@@ -110,11 +119,26 @@ body::before{
 }
 
 .tb-inputs {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 5px;
-  flex: 1;
-  flex-wrap: wrap;
+  gap: 10px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 5px 10px;
+}
+
+.tb-inputs > * {
+  flex: 0 0 auto;
+}
+
+.tb-inputs::-webkit-scrollbar {
+  height: 6px
+}
+
+.tb-inputs::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2);
+  border-radius: 4px;
 }
 
 .tb-field label{
@@ -132,7 +156,7 @@ body::before{
   color: var(--cyan);
   font-family: 'IBM Plex Mono', monospace;
   font-size: 12px;
-  width: 100px;
+  width: 110px;
   text-align: center;
   caret-color: var(--green);
 }
@@ -141,10 +165,11 @@ body::before{
 .tb-field select option { background: var(--bg2); color: var(--text); }
 
 .tb-btn{
-  margin-left: 2px;
+  margin-left: 10px;
   margin-right: 2px;
   background: var(--green-lo);
   border: none;
+  position: sticky;
   border-left: 1px solid var(--border-hi);
   color: var(--green);
   font-family: 'IBM Plex Mono', monospace;
@@ -156,12 +181,13 @@ body::before{
   height: 42px;
   cursor: pointer;
   transition: background 0.15s, color 0.15s;
-}.tb-btn:hover { background: var(--border-hi); color: var(--bg); }
+}.tb-btn:hover { background: var(--border-hi); color: var(--bg); opacity: 0.8;}
 
      /* description field on topbar! */
 
 .description-field{
   max-width: 116px;
+  white-space: nowrap;
   line-height: 1.3;
 }
 
@@ -182,3 +208,68 @@ body::before{
   text-overflow: ellipsis;
 }
 
+/* ── main grid ── */
+
+#grid{
+  display: grid;
+  grid-template-columns: 220px 1fr 1fr;
+  grid-template-rows: auto auto auto auto;
+  gap: 12px
+}
+
+/* ── player Card ── */
+
+#player-card{
+  grid-column: 1;
+  grid-row: 1/3;
+  padding: 32px 16px 16px
+}
+
+.pc-name {
+  font-family: 'VT323', monospace;
+  font-size: 22px;
+  color: var(--text);
+  margin-bottom: 2px;
+  text-align: center;
+}
+.pc-platform {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+  text-align: center
+}
+.pc-rank-badge{
+  text-align: center; 
+  margin-bottom: 16px;
+}
+
+.pc-rank-badge .rank-label{
+  font-family: 'VT323', monospace;
+  font-size: 26px;
+  color: var(--green);
+  display: block;
+  line-height: 1;
+}
+.pc-rank-badge .rank-sub{
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.pc-divider{
+  border: none;
+  border-top: 1px solid var(--dim);
+  margin: 12px 0
+}
+
+/* --- PC stat ---- */
+
+.pc-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3px 0;
+  font-size: 12px;
+}
