@@ -92,9 +92,15 @@ const selectedPlaylist = ref('')
 
       <hr class="pc-divider"/>
 
-      <div class="pc-stat">
-        <span class="k">W/L</span>
-        <span class="v" id="pc-wl"> {{ card.wins }} / {{ card.losses }} </span>
+      <div class="wl-bar-wrap">
+        <div class="wl-bar-label">
+          <span id="wl-w-label">W — </span>
+          <span id="wl-l-label">L —</span>
+        </div>
+        <div class="wl-bar">
+          <div class="w" id="wl-bar-w" style="width:0%"></div>
+          <div class="l" id="wl-bar-l" style="width:0%"></div>
+        </div>
       </div>
 
       <div class="pc-stat">
@@ -122,13 +128,21 @@ const selectedPlaylist = ref('')
         <span class="v" id="pc-shotpct"> {{ card.shotPct }}</span>
       </div>
 
-      <div class="wl-bar-wrap">
-        <div class="wl-bar-label"><span id="wl-w-label">W — </span><span id="wl-l-label">L —</span></div>
-        <div class="wl-bar">
-          <div class="w" id="wl-bar-w" style="width:0%"></div>
-          <div class="l" id="wl-bar-l" style="width:0%"></div>
-        </div>
+    </div>
+
+    <!--TODO: Fit in metrics / graph of recent matches. Sort by win/loss or score? -->
+    <div class="box" id="match-metrics">
+      <div class="box-title">Metrics</div>
+    </div>
+
+    <!---TODO: Finish AI panel implementation-->
+    <div class="box" id="ai-panel">
+      <div class="box-title">BRAIN.GG</div>
+      <div class="ai-header">
+        <span class="ai-badge">KIMI K2</span>
+        <span class="ai-description">YOUR (OPEN SOURCE) RL COACH</span>
       </div>
+
     </div>
   </div>
 </template>
