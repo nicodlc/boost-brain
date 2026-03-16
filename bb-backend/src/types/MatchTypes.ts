@@ -1,8 +1,7 @@
-import {playlists} from "./Player.ts"
+export type playlists = "ranked-solo-standard" | "ranked-duos" | "ranked-standard";
 
 export type ReplayMatchData = {
     matchID: string;
-    mapName: string;
     duration: number; // in seconds!
     playlistID: playlists;
 }
