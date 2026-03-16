@@ -1,6 +1,5 @@
-export type playlists = "ranked-solo-standard" | "ranked-duos" | "ranked-standard";
 export type platforms = "steam" | "ps4" | "epic";
-
+import { playlists } from "./MatchTypes.ts";
 
 /* ——— Top Bar Input DTO ——— */
 export type InputPlayerDTO = {
