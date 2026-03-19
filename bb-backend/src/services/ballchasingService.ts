@@ -1,6 +1,5 @@
-import { platforms } from "../types/Player.ts";
+import { BoostData, PositioningData, ReplayPlayerStats } from "../types/Player.ts";
 import { playlists, ReplayMatchData } from "../types/MatchTypes.ts";
-import { isDataView } from "node:util/types";
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -92,12 +91,51 @@ export class BallchasingService {
                 }))
 
                 nextURL = data.next ?? null;
+                replayIDs.push(...ids)
+
+                /*Ballchasing rate limiting allows 2 requests per second*/
+                await sleep(700)
             }
 
-            replayIDs.push(...ids)
+            
             return replayIDs;
         }
     }
 
     // TODO: implement function to fetch replay data for each replayID
+    async fetchReplayData(replayID: string, playerID: string): Promise<ReplayPlayerStats[] | null> {
+        const completeURL = `${this.baseURL}/${replayID}`
+
+        try{
+            const response = await fetch(completeURL, {
+                headers: {
+                    'Authorization': this.apiKey
+                }
+            })
+
+            if(!response.ok || response.status != 200){
+                console.error(`Error: ${response.statusText}`)
+                return null;
+            }
+
+            const data = await response.json();
+            const player = this.getPlayerTeam(playerID, data);
+
+            
+
+        } catch(error){
+            console.error(`Failed to fetch data for replay ${replayID}: ${error}`)
+        }
+
+        /* Nothing was found, defaulting to a null object for the time being.*/
+        return null;
+    }
+
+
+
+
+    //TODO: Implement function to get the player's team
+    getPlayerTeam(playerID: string, data: Record<string, any>): boolean {
+        return false;
+    }
 }
